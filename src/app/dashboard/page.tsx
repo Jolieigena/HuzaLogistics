@@ -1,9 +1,20 @@
 "use client";
 
 import React from "react";
-import { ArrowUpRight, ArrowDownRight, PackageCheck, AlertCircle, Clock, MoreHorizontal, Truck, Warehouse } from "lucide-react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { ArrowUpRight, ArrowDownRight, PackageCheck, AlertCircle, Truck, Warehouse } from "lucide-react";
+import { useShipments, STATUS_STYLES } from "@/context/ShipmentsContext";
+
+const MapComponent = dynamic(
+  () => import("@/components/MapComponent"),
+  { ssr: false, loading: () => <div className="w-full h-full bg-slate-50 animate-pulse"></div> }
+);
 
 export default function DashboardOverview() {
+  const { shipments } = useShipments();
+  const recentShipments = shipments.slice(0, 3);
+
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8">
       
@@ -17,45 +28,45 @@ export default function DashboardOverview() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         
         {/* Shipment Tracking */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
           <div className="flex justify-between items-start mb-4">
             <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
               <PackageCheck className="w-5 h-5" />
             </div>
-            <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+            <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
               <ArrowUpRight className="w-3 h-3" /> 12%
             </span>
           </div>
           <h3 className="text-slate-500 text-sm font-medium mb-1">Active Shipments</h3>
-          <p className="text-3xl font-bold text-slate-900 tracking-tight">1,248</p>
+          <p className="text-2xl font-bold text-slate-900 tracking-tight">1,248</p>
         </div>
 
         {/* Fleet Coordination */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
           <div className="flex justify-between items-start mb-4">
             <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
               <Truck className="w-5 h-5" />
             </div>
-            <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+            <span className="flex items-center gap-1 text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg">
               <ArrowUpRight className="w-3 h-3" /> 94% online
             </span>
           </div>
           <h3 className="text-slate-500 text-sm font-medium mb-1">Active Fleet Vehicles</h3>
-          <p className="text-3xl font-bold text-slate-900 tracking-tight">42<span className="text-lg text-slate-400 font-medium"> / 45</span></p>
+          <p className="text-2xl font-bold text-slate-900 tracking-tight">42<span className="text-lg text-slate-400 font-medium"> / 45</span></p>
         </div>
 
         {/* Warehouse Management */}
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col">
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col">
           <div className="flex justify-between items-start mb-4">
             <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
               <Warehouse className="w-5 h-5" />
             </div>
-            <span className="flex items-center gap-1 text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-full">
+            <span className="flex items-center gap-1 text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg">
               High
             </span>
           </div>
           <h3 className="text-slate-500 text-sm font-medium mb-1">Global Warehouse Cap.</h3>
-          <p className="text-3xl font-bold text-slate-900 tracking-tight">84<span className="text-lg text-slate-400 font-medium">%</span></p>
+          <p className="text-2xl font-bold text-slate-900 tracking-tight">84<span className="text-lg text-slate-400 font-medium">%</span></p>
         </div>
 
         {/* Financials (Dark Theme Accent) */}
@@ -82,10 +93,10 @@ export default function DashboardOverview() {
         <div className="lg:col-span-2 space-y-8">
           
           {/* Recent Shipments Table */}
-          <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden flex flex-col">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center">
               <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2"><PackageCheck className="w-5 h-5 text-blue-600"/> Active Shipments</h2>
-              <button className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">View All</button>
+              <Link href="/dashboard/shipments" className="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">View All</Link>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -98,16 +109,12 @@ export default function DashboardOverview() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {[
-                    { id: "HZ-99342", route: "Shanghai → Los Angeles", status: "In Transit", color: "text-blue-700 bg-blue-50", date: "Oct 24, 14:00" },
-                    { id: "HZ-88129", route: "Rotterdam → New York", status: "Delayed", color: "text-amber-700 bg-amber-50", date: "Oct 26, 09:30" },
-                    { id: "HZ-66290", route: "Singapore → Sydney", status: "Delivered", color: "text-emerald-700 bg-emerald-50", date: "Oct 22, 11:15" },
-                  ].map((item) => (
+                  {recentShipments.map((item) => (
                     <tr key={item.id} className="hover:bg-slate-50 transition-colors cursor-pointer group">
                       <td className="py-4 px-6 font-medium text-slate-900 text-sm">{item.id}</td>
-                      <td className="py-4 px-6 text-slate-600 text-sm">{item.route}</td>
+                      <td className="py-4 px-6 text-slate-600 text-sm">{item.origin} → {item.destination}</td>
                       <td className="py-4 px-6">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${item.color}`}>
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${STATUS_STYLES[item.status]}`}>
                           {item.status}
                         </span>
                       </td>
@@ -121,7 +128,7 @@ export default function DashboardOverview() {
 
           {/* Fleet Coordination Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-6">
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
               <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2"><Truck className="w-5 h-5 text-indigo-600"/> Fleet Status</h2>
               <div className="space-y-4">
                 <div>
@@ -139,23 +146,32 @@ export default function DashboardOverview() {
               </div>
             </div>
 
-            <div className="bg-slate-900 rounded-3xl shadow-sm p-6 text-white overflow-hidden relative border border-slate-800">
-               {/* Map Background */}
-               <img 
-                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80" 
-                 alt="Map" 
-                 className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity"
-               />
-               <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/90 to-transparent"></div>
+            <div className="rounded-xl shadow-md p-6 overflow-hidden relative h-[320px] flex flex-col justify-end">
+               {/* Real Interactive Map Background */}
+               <div className="absolute inset-0 z-0">
+                 <MapComponent 
+                   key="dashboard-live-map"
+                   vehicles={[
+                     { id: "TRK-083", lat: 36.16, lng: -115.1, status: "Delayed", driver: "David Kim" },
+                     { id: "TRK-205", lat: 40.76, lng: -111.89, status: "Maintenance", driver: "Elena Rodriguez" }
+                   ]} 
+                 />
+               </div>
                
-               <h2 className="text-lg font-bold mb-1 relative z-10 flex items-center gap-2">
-                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                 Live Dispatch
-               </h2>
-               <p className="text-slate-300 text-sm mb-6 relative z-10">2 vehicles require routing optimization</p>
-               <button className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-2.5 rounded-xl transition-all shadow-lg shadow-emerald-900/50 relative z-10 border border-emerald-400/50 backdrop-blur-sm">
-                 Optimize Routes
-               </button>
+               {/* Dark Transparent Front Drop (Gradient) - Lighter Version */}
+               <div className="absolute inset-0 bg-gradient-to-t from-slate-800/90 via-slate-800/40 to-transparent pointer-events-none z-10"></div>
+               
+               {/* Content smoothly seated at the bottom */}
+               <div className="relative z-20 mt-auto">
+                 <h2 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                   Live Dispatch
+                 </h2>
+                 <p className="text-slate-300 text-sm mb-5">2 vehicles require routing optimization</p>
+                 <Link href="/dashboard/fleet" className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-semibold py-2.5 rounded-xl transition-all shadow-sm flex justify-center items-center">
+                   Optimize Routes
+                 </Link>
+               </div>
             </div>
           </div>
 
@@ -165,7 +181,7 @@ export default function DashboardOverview() {
         <div className="space-y-8">
           
           {/* Warehouse Management */}
-          <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-6">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
             <h2 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2"><Warehouse className="w-5 h-5 text-amber-600"/> Hub Capacity</h2>
             <div className="space-y-5">
               
@@ -200,13 +216,13 @@ export default function DashboardOverview() {
               </div>
               
             </div>
-            <button className="w-full mt-6 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-sm rounded-xl transition-colors border border-slate-200">
+            <Link href="/dashboard/warehouses" className="w-full mt-6 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 font-medium text-sm rounded-xl transition-colors border border-slate-200 flex justify-center items-center">
               Manage Inventory
-            </button>
+            </Link>
           </div>
 
           {/* AI Insights */}
-          <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-6">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
             <h2 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2"><AlertCircle className="w-5 h-5 text-purple-600"/> AI Insights</h2>
             
             <div className="space-y-6">

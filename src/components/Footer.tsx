@@ -31,7 +31,7 @@ export function Footer() {
           <ul className="space-y-2.5 text-sm text-slate-300">
             <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
             <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
-            <li><Link href="/about" className="hover:text-white transition-colors">Our Approach</Link></li>
+            <li><Link href="/about#philosophy" className="hover:text-white transition-colors">Our Approach</Link></li>
             <li><Link href="/technology" className="hover:text-white transition-colors">Technology</Link></li>
           </ul>
         </div>
@@ -42,10 +42,10 @@ export function Footer() {
             Services
           </h4>
           <ul className="space-y-2.5 text-sm text-slate-300">
-            <li><span className="hover:text-white transition-colors cursor-pointer" onClick={openWaitlist}>Warehousing</span></li>
-            <li><span className="hover:text-white transition-colors cursor-pointer" onClick={openWaitlist}>Shipment Tracking</span></li>
-            <li><span className="hover:text-white transition-colors cursor-pointer" onClick={openWaitlist}>Fleet Telemetry</span></li>
-            <li><span className="hover:text-white transition-colors cursor-pointer" onClick={openWaitlist}>Customs Clearance</span></li>
+            <li><Link href="/licensing" className="hover:text-white transition-colors">Warehousing</Link></li>
+            <li><Link href="/licensing" className="hover:text-white transition-colors">Shipment Tracking</Link></li>
+            <li><Link href="/licensing" className="hover:text-white transition-colors">Fleet Telemetry</Link></li>
+            <li><Link href="/licensing" className="hover:text-white transition-colors">Customs Clearance</Link></li>
           </ul>
         </div>
 

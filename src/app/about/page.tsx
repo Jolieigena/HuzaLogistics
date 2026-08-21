@@ -22,7 +22,7 @@ export default function AboutPage() {
       </section>
 
       {/* Content Area */}
-      <section className="w-full py-20 px-6 sm:px-10 max-w-3xl mx-auto text-center">
+      <section id="philosophy" className="w-full py-20 px-6 sm:px-10 max-w-3xl mx-auto text-center scroll-mt-20">
         <h2 className="text-3xl font-semibold mb-6 text-slate-900">Our Philosophy</h2>
         <p className="text-lg text-slate-600 leading-relaxed mb-8">
           The modern supply chain is incredibly complex, fragmented across dozens of vendors, borders, and software systems. We believe that true efficiency requires a unified platform that connects everything from the warehouse floor to the delivery fleet.

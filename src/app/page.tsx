@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <HeroSection onLearnMoreClick={openPreview} />
+      <HeroSection />
       <WhyChooseUs />
       <ServicesSection onServiceClick={openPreview} />
       <IndustriesSection onIndustryClick={openPreview} />

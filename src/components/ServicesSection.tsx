@@ -75,7 +75,7 @@ export function ServicesSection({ onServiceClick }: ServicesSectionProps) {
               src={service.image}
               alt={service.title}
               fill
-              className="object-cover object-center opacity-50 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
+              className="object-cover object-center opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
 

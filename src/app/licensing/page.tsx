@@ -54,7 +54,7 @@ export default function LicensingPage() {
               </li>
             </ul>
             <Link
-              href="/get-started"
+              href="/get-started?plan=starter"
               className="w-full py-3.5 rounded-full font-medium transition-all bg-slate-100 hover:bg-slate-200 text-slate-900 text-center block"
             >
               Get Started

@@ -11,9 +11,6 @@ export const metadata: Metadata = {
   title: "e-Logistics | Huzalabs",
   description:
     "End-to-end supply chain visibility — shipment tracking, fleet coordination, and warehouse management for goods on the move.",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 import { LayoutWrapper } from "@/components/LayoutWrapper";
@@ -24,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className={`${inter.className} font-sans bg-white text-slate-900`}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body className={`${inter.className} font-sans bg-white text-slate-900`} suppressHydrationWarning>
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
